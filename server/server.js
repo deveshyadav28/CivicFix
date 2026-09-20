@@ -18,6 +18,11 @@ app.use(express.json());
 // Routes
 app.use("/api/auth", require("./routes/authRoutes"));
 
+app.use(
+  "/api/complaints",
+  require("./routes/complaintRoutes")
+);
+
 app.get("/", (req, res) => {
   res.json({
     message: "CivicFix API is running",
