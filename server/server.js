@@ -23,6 +23,12 @@ app.use(
   require("./routes/complaintRoutes")
 );
 
+app.use(
+  "/api/admin",
+  require("./routes/adminRoutes")
+);
+
+
 app.get("/", (req, res) => {
   res.json({
     message: "CivicFix API is running",
