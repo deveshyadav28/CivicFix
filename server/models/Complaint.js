@@ -26,6 +26,20 @@ const complaintSchema = new mongoose.Schema(
       ],
     },
 
+    severity: {
+      type: String,
+      enum: [
+        "Low",
+        "Medium",
+        "High"
+      ],
+    },
+
+    affectedPeople: {
+      type: Number,
+      default: 1
+    },
+
     location: {
       address: {
         type: String,

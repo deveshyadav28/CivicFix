@@ -1,6 +1,10 @@
 const Complaint = require("../models/Complaint");
+const calculatePriority = require("../utils/priorityScore");
+
+//add severty and affected people in complaintController
 
 // Create Complaint--  improvement krna hai 
+
 const createComplaint = async (req, res) => {
   try {
     const {
@@ -9,6 +13,8 @@ const createComplaint = async (req, res) => {
       category,
       location,
       image,
+      severity,
+      affectedPeople,
     } = req.body;
 
     if (!title || !description || !category || !location) {
@@ -17,17 +23,33 @@ const createComplaint = async (req, res) => {
       });
     }
 
+    //Calculate priority -- ageInDays ke logic ko improve krna hai 
+    // taki jab admin complaint dekhega tab actual age calculate kr sko
+    //abhi bas priority and score dikhega ..
+
+    const priorityData = calculatePriority(
+      severity || "Low",
+      affectedPeople || 1,
+      0
+    )
+
     const complaint = await Complaint.create({
       title,
       description,
       category,
       location,
       image: image || "",
+
+      severity: severity || "Low",
+      affectedPeople: affectedPeople || 1,    
+      priority: priorityData.priority,
       user: req.user.userId,
     });
 
     res.status(201).json({
       message: "Complaint created successfully",
+      priority: priorityData.priority,
+      priorityScore: priorityData.score,
       complaint,
     });
   } catch (error) {
