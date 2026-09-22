@@ -1,16 +1,29 @@
+import Navbar from "../components/Navbar";
+import Hero from "../components/Hero";
+import Features from "../components/Features";
+import HowItWorks from "../components/HowitWorks";
+import CTA from "../components/CTA";
+import Footer from "../components/Footer";
+
+
 function Home() {
   return (
-    <div className="min-h-screen bg-slate-50">
+    <>
+    <Navbar/>
 
-      <h1 className="text-4xl font-bold text-center pt-20">
-        CivicFix
-      </h1>
+    <main>
+      <Hero />
 
-      <p className="text-center mt-4 text-slate-600">
-        Smart Civic Complaint & Resolution System
-      </p>
+      <Features />
 
-    </div>
+      <HowItWorks />
+
+      <CTA />
+    </main>
+
+    <Footer />
+    </>
+    
   );
 }
 
