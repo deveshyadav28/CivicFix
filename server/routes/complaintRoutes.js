@@ -3,6 +3,7 @@ const express = require("express");
 const {
   createComplaint,
   getMyComplaints,
+  getMyComplaintById,
 } = require("../controllers/complaintController");
 
 const authMiddleware = require("../middleware/authMiddleware");
@@ -21,6 +22,14 @@ router.get(
   "/my",
   authMiddleware,
   getMyComplaints
+);
+
+//sigle complaint
+
+router.get(
+  "/:id",
+  authMiddleware,
+  getMyComplaintById,
 );
 
 module.exports = router;

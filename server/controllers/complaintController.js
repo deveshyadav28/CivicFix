@@ -41,7 +41,7 @@ const createComplaint = async (req, res) => {
       image: image || "",
 
       severity: severity || "Low",
-      affectedPeople: affectedPeople || 1,    
+      affectedPeople: affectedPeople || 1,
       priority: priorityData.priority,
       user: req.user.userId,
     });
@@ -100,6 +100,31 @@ const getAllComplaints = async (req, res) => {
     });
   }
 };
+
+const getMyComplaintById = async (req, res) => {
+  try {
+    const complaint = await Complaint.findOne({
+      _id: req.params.id,
+      user: req.user.userId,
+    });
+
+    if (!complaint) {
+      return res.status(404).json({
+        message: "Complaint not found",
+      });
+    }
+
+    res.status(200).json({
+      complaint,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error",
+      error: error.message,
+    });
+  }
+};
+
 
 // Get single Complaint
 
@@ -215,11 +240,15 @@ const assignComplaint = async (req, res) => {
   }
 };
 
+
 module.exports = {
   createComplaint,
   getMyComplaints,
+  getMyComplaintById,
+
   getAllComplaints,
   getComplaintById,
   updateComplaintStatus,
   assignComplaint,
+
 };
